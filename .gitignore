@@ -1,0 +1,17 @@
+# Local environments
+/.bundle/
+/.venv/
+/vendor/bundle/
+
+# Build artefacts
+*.gem
+/bin/*
+!/bin/setup
+
+# OS / editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+/tmp/

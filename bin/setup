@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+# Idempotent local environment setup: Ruby gems into .bundle/, qdbd into .venv/.
+# Nothing is installed globally.
+set -euo pipefail
+cd "${0:A:h}/.."
+
+bundle config set --local path .bundle
+bundle install
+
+if [[ ! -x .venv/bin/python ]]; then
+  python3 -m venv .venv
+fi
+if [[ ! -x .venv/bin/qdbd ]]; then
+  .venv/bin/pip install --quiet quickdbd-cli
+fi
+
+echo "Ready: bundle exec rake test"

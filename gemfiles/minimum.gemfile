@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+# The oldest dependency versions the gemspec allows; CI runs the suite against them.
+# Locally: BUNDLE_GEMFILE=gemfiles/minimum.gemfile BUNDLE_PATH=.bundle bundle exec rake test
+
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "activesupport", "~> 7.1.0"
+gem "prism", "~> 1.0.0"
+
+gem "minitest", "~> 5.25"
+gem "rake", "~> 13.0"

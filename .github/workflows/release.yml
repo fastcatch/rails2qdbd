@@ -1,0 +1,37 @@
+# Publishes to RubyGems.org when a version tag (vX.Y.Z, equal to Rails2qdbd::VERSION) is pushed,
+# via trusted publishing: no API key is stored. One-time setup on RubyGems.org: a trusted
+# publisher for fastcatch/rails2qdbd, workflow release.yml, environment "release".
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    if: github.repository == 'fastcatch/rails2qdbd'
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write # bundler's release task pushes the tag (already present: skipped)
+      id-token: write # OIDC token for RubyGems trusted publishing
+    env:
+      REQUIRE_QDBD: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "quickdbd-cli~=0.3.1"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+      - name: Tag matches the gem version
+        run: |
+          version=$(ruby -Ilib -e 'require "rails2qdbd/version"; print Rails2qdbd::VERSION')
+          test "${GITHUB_REF_NAME}" = "v${version}" || { echo "tag ${GITHUB_REF_NAME} != v${version}"; exit 1; }
+      - run: bundle exec rake test
+      - uses: rubygems/release-gem@v1

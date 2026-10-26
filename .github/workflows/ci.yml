@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby }} (${{ matrix.deps }} dependencies)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # prism 2.x needs Ruby >= 3.3, so Ruby 3.2 runs on the oldest allowed versions.
+          - { ruby: "3.2", deps: minimum, gemfile: gemfiles/minimum.gemfile }
+          - { ruby: "3.3", deps: locked, gemfile: Gemfile }
+          - { ruby: "3.4", deps: locked, gemfile: Gemfile }
+          - { ruby: "4.0", deps: locked, gemfile: Gemfile }
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
+      REQUIRE_QDBD: "1" # fail, rather than skip, the tests that run qdbd
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install qdbd
+        run: pip install "quickdbd-cli~=0.3.1"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake test
+      - name: Build the gem (warnings are errors)
+        run: gem build --strict rails2qdbd.gemspec

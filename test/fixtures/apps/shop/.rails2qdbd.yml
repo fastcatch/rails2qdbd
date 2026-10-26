@@ -1,0 +1,7 @@
+output: schema/
+exclude: [legacy_imports]
+default_group: sales
+groups:
+  storage: ["active_storage_*"]
+  people: [accounts, users, memberships, bonuses, api_keys, addresses, countries, "admin_*"]
+  catalog: [products, "categories*"]
