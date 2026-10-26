@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails2qdbd (0.1.0)
+    rails2qdbd (0.1.1)
       activesupport (>= 7.1, < 9)
       prism (>= 1.0, < 3)
 

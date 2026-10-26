@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "rails2qdbd"
   spec.version = Rails2qdbd::VERSION
   spec.authors = ["fastcatch"]
-  spec.email = ["fastcatch@gmail.com"]
+  spec.email = ["fastcatch.mail@gmail.com"]
   spec.summary = "Convert a Rails app's schema.rb and models into qdbd (QuickDBD) schema files."
   spec.description = <<~DESC
     rails2qdbd reads db/schema.rb and app/models statically (no app boot, no database)

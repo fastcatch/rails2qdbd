@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-26
+
+### Fixed
+- Gem contact email is now fastcatch.mail@gmail.com.
+
 ## [0.1.0] - 2026-10-26
 
 ### Added

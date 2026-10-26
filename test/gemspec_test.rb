@@ -9,7 +9,7 @@ class GemspecTest < Minitest::Test
   def spec = @spec ||= Dir.chdir(QdbdHelpers::ROOT) { Gem::Specification.load("rails2qdbd.gemspec") }
 
   def test_identity_and_links
-    assert_equal [["fastcatch"], ["fastcatch@gmail.com"]], [spec.authors, Array(spec.email)]
+    assert_equal [["fastcatch"], ["fastcatch.mail@gmail.com"]], [spec.authors, Array(spec.email)]
     assert_equal REPO, spec.homepage
     assert_equal({ "source_code_uri" => REPO,
                    "changelog_uri" => "#{REPO}/blob/main/CHANGELOG.md", "bug_tracker_uri" => "#{REPO}/issues",
