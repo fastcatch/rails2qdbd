@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-26
+
 ### Added
 - Converter: `db/schema.rb` (+ extra schema files) and `app/models` → qdbd schema files,
   parsed statically with Prism.
